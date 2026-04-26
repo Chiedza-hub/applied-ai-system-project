@@ -205,3 +205,145 @@ def test_different_time_tasks_have_no_conflict():
 def test_no_conflicts_on_empty_schedule():
     pet = make_pet()
     assert pet.schedule.get_conflicts() == []
+
+
+# --- Time Range Conflict Tests ---
+
+def test_overlapping_ranges_trigger_conflict():
+    """9:00–10:00 vs 9:15–10:00 should conflict (the 9:15 task starts inside the first window)."""
+    pet = make_pet()
+    t1 = CareTask(title="Vet visit", category="medical", priority="high",
+                  due_date=datetime(2026, 4, 1, 9, 0), duration_minutes=60)
+    t2 = CareTask(title="Morning walk", category="exercise", priority="medium",
+                  due_date=datetime(2026, 4, 1, 9, 15), duration_minutes=45)
+
+    pet.schedule.add_task(t1)
+    pet.schedule.add_task(t2)
+
+    conflicts = pet.schedule.get_conflicts()
+    assert len(conflicts) > 0
+    assert "Vet visit" in conflicts[0]
+    assert "Morning walk" in conflicts[0]
+
+
+def test_back_to_back_ranges_no_conflict():
+    """9:00–10:00 ending exactly when 10:00–11:00 starts should NOT conflict."""
+    pet = make_pet()
+    t1 = CareTask(title="Vet visit", category="medical", priority="high",
+                  due_date=datetime(2026, 4, 1, 9, 0), duration_minutes=60)
+    t2 = CareTask(title="Grooming", category="grooming", priority="low",
+                  due_date=datetime(2026, 4, 1, 10, 0), duration_minutes=60)
+
+    pet.schedule.add_task(t1)
+    pet.schedule.add_task(t2)
+
+    assert pet.schedule.get_conflicts() == []
+
+
+def test_non_overlapping_ranges_no_conflict():
+    """9:00–9:30 and 10:00–10:30 with a gap should NOT conflict."""
+    pet = make_pet()
+    t1 = CareTask(title="Feed breakfast", category="feeding", priority="high",
+                  due_date=datetime(2026, 4, 1, 9, 0), duration_minutes=30)
+    t2 = CareTask(title="Evening walk", category="exercise", priority="medium",
+                  due_date=datetime(2026, 4, 1, 10, 0), duration_minutes=30)
+
+    pet.schedule.add_task(t1)
+    pet.schedule.add_task(t2)
+
+    assert pet.schedule.get_conflicts() == []
+
+
+def test_contained_range_triggers_conflict():
+    """A task fully inside another's window (9:30–10:00 within 9:00–11:00) should conflict."""
+    pet = make_pet()
+    t1 = CareTask(title="Long vet appointment", category="medical", priority="high",
+                  due_date=datetime(2026, 4, 1, 9, 0), duration_minutes=120)
+    t2 = CareTask(title="Pill time", category="medical", priority="high",
+                  due_date=datetime(2026, 4, 1, 9, 30), duration_minutes=30)
+
+    pet.schedule.add_task(t1)
+    pet.schedule.add_task(t2)
+
+    assert len(pet.schedule.get_conflicts()) > 0
+
+
+def test_ranged_task_overlaps_point_in_time():
+    """A point-in-time task at 9:30 should conflict with a 9:00–10:00 ranged task."""
+    pet = make_pet()
+    t1 = CareTask(title="Vet visit", category="medical", priority="high",
+                  due_date=datetime(2026, 4, 1, 9, 0), duration_minutes=60)
+    t2 = CareTask(title="Pill time", category="medical", priority="high",
+                  due_date=datetime(2026, 4, 1, 9, 30), duration_minutes=0)
+
+    pet.schedule.add_task(t1)
+    pet.schedule.add_task(t2)
+
+    assert len(pet.schedule.get_conflicts()) > 0
+
+
+def test_ranged_task_no_overlap_with_later_point_in_time():
+    """A point-in-time task at 10:30 should NOT conflict with a 9:00–10:00 ranged task."""
+    pet = make_pet()
+    t1 = CareTask(title="Vet visit", category="medical", priority="high",
+                  due_date=datetime(2026, 4, 1, 9, 0), duration_minutes=60)
+    t2 = CareTask(title="Afternoon pill", category="medical", priority="high",
+                  due_date=datetime(2026, 4, 1, 10, 30), duration_minutes=0)
+
+    pet.schedule.add_task(t1)
+    pet.schedule.add_task(t2)
+
+    assert pet.schedule.get_conflicts() == []
+
+
+def test_cross_pet_range_overlap_triggers_conflict():
+    """Overlapping ranged tasks across two pets should appear in owner.get_all_conflicts()."""
+    owner = Owner(name="Jordan")
+    mochi = Pet(name="Mochi", species="dog", breed="Shiba Inu", age=3)
+    luna = Pet(name="Luna", species="cat", breed="Siamese", age=5)
+    owner.add_pet(mochi)
+    owner.add_pet(luna)
+
+    t1 = CareTask(title="Mochi walk", category="exercise", priority="high",
+                  due_date=datetime(2026, 4, 1, 9, 0), duration_minutes=60)
+    t2 = CareTask(title="Luna grooming", category="grooming", priority="medium",
+                  due_date=datetime(2026, 4, 1, 9, 30), duration_minutes=30)
+
+    mochi.schedule.add_task(t1)
+    luna.schedule.add_task(t2)
+
+    conflicts = owner.get_all_conflicts()
+    assert any("Mochi walk" in c and "Luna grooming" in c for c in conflicts)
+
+
+def test_cross_pet_non_overlapping_ranges_no_conflict():
+    """Non-overlapping ranged tasks across two pets should produce no cross-pet conflict."""
+    owner = Owner(name="Jordan")
+    mochi = Pet(name="Mochi", species="dog", breed="Shiba Inu", age=3)
+    luna = Pet(name="Luna", species="cat", breed="Siamese", age=5)
+    owner.add_pet(mochi)
+    owner.add_pet(luna)
+
+    t1 = CareTask(title="Mochi walk", category="exercise", priority="high",
+                  due_date=datetime(2026, 4, 1, 9, 0), duration_minutes=60)
+    t2 = CareTask(title="Luna grooming", category="grooming", priority="medium",
+                  due_date=datetime(2026, 4, 1, 10, 0), duration_minutes=30)
+
+    mochi.schedule.add_task(t1)
+    luna.schedule.add_task(t2)
+
+    assert owner.get_all_conflicts() == []
+
+
+def test_recurring_task_inherits_duration_minutes():
+    """Completing a recurring ranged task should create a copy with the same duration."""
+    pet = make_pet()
+    task = CareTask(title="Daily walk", category="exercise", priority="high",
+                    due_date=datetime(2026, 4, 1, 9, 0), recurrence="daily",
+                    duration_minutes=45)
+    pet.schedule.add_task(task)
+    pet.schedule.complete_task(task.task_id)
+
+    new_task = pet.schedule.tasks[-1]
+    assert new_task.duration_minutes == 45
+    assert new_task.recurrence == "daily"

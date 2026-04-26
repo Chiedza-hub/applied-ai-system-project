@@ -17,6 +17,7 @@ class CareTask:
     notes: str = ""
     task_id: str = field(default_factory=lambda: str(uuid4()))
     recurrence: str = None  # "daily", "weekly", or None
+    duration_minutes: int = 0
 
     def reschedule(self, new_date: datetime):
         """Update the task's due date to new_date."""
@@ -37,7 +38,34 @@ class CareTask:
             "is_completed": self.is_completed,
             "notes": self.notes,
             "assigned_pet": self.assigned_pet.name if self.assigned_pet else None,
+            "duration_minutes": self.duration_minutes,
         }
+
+
+def _task_end(task: "CareTask") -> datetime:
+    if task.duration_minutes and task.duration_minutes > 0:
+        return task.due_date + timedelta(minutes=task.duration_minutes)
+    return task.due_date
+
+
+def _tasks_overlap(a: "CareTask", b: "CareTask") -> bool:
+    a_start, b_start = a.due_date, b.due_date
+    a_end = _task_end(a)
+    b_end = _task_end(b)
+    # Point-in-time tasks get a 1-second window so exact-time matches are caught
+    if a_end == a_start:
+        a_end = a_start + timedelta(seconds=1)
+    if b_end == b_start:
+        b_end = b_start + timedelta(seconds=1)
+    return a_start < b_end and b_start < a_end
+
+
+def _time_range_str(task: "CareTask") -> str:
+    start = task.due_date.strftime("%I:%M %p")
+    end = _task_end(task)
+    if end == task.due_date:
+        return start
+    return f"{start}–{end.strftime('%I:%M %p')}"
 
 
 @dataclass
@@ -57,30 +85,36 @@ class Schedule:
         self.tasks.append(task)
 
     def _check_conflict(self, new_task: CareTask) -> str:
-        """Return a warning string if new_task shares a due_date with an existing task, else empty string."""
+        """Return a warning string if new_task overlaps an existing incomplete task, else empty string."""
         pet_name = self.pet.name if self.pet else "Unknown"
         conflict = next(
-            (t for t in self.tasks if t.due_date == new_task.due_date and not t.is_completed),
-            None
+            (t for t in self.tasks if not t.is_completed and _tasks_overlap(t, new_task)),
+            None,
         )
         if conflict:
-            time_str = new_task.due_date.strftime("%b %d %I:%M %p")
-            return f"Conflict for {pet_name}: '{new_task.title}' and '{conflict.title}' are both scheduled at {time_str}."
+            return (
+                f"Conflict for {pet_name}: '{new_task.title}' "
+                f"({_time_range_str(new_task)}) overlaps with '{conflict.title}' "
+                f"({_time_range_str(conflict)})."
+            )
         return ""
 
     def get_conflicts(self) -> list:
-        """Return a list of warning strings for all same-time conflicts in this schedule."""
+        """Return a list of warning strings for all time-range conflicts in this schedule."""
         pet_name = self.pet.name if self.pet else "Unknown"
-        by_time = {}
-        for task in self.tasks:
-            if not task.is_completed:
-                by_time.setdefault(task.due_date, []).append(task)
+        active = [t for t in self.tasks if not t.is_completed]
         warnings = []
-        for due_date, group in by_time.items():
-            if len(group) > 1:
-                time_str = due_date.strftime("%b %d %I:%M %p")
-                titles = " and ".join(f"'{t.title}'" for t in group)
-                warnings.append(f"Conflict for {pet_name}: {titles} are both scheduled at {time_str}.")
+        reported = set()
+        for i, a in enumerate(active):
+            for b in active[i + 1:]:
+                if _tasks_overlap(a, b):
+                    key = tuple(sorted([a.task_id, b.task_id]))
+                    if key not in reported:
+                        reported.add(key)
+                        warnings.append(
+                            f"Conflict for {pet_name}: '{a.title}' ({_time_range_str(a)}) "
+                            f"overlaps with '{b.title}' ({_time_range_str(b)})."
+                        )
         return warnings
 
     def remove_task(self, task_id: str):
@@ -123,6 +157,7 @@ class Schedule:
                     due_date=next_due,
                     notes=task.notes,
                     recurrence=task.recurrence,
+                    duration_minutes=task.duration_minutes,
                 )
                 self.add_task(next_task)
                 return
@@ -239,6 +274,7 @@ class Owner:
                             "is_completed": t.is_completed,
                             "notes": t.notes,
                             "recurrence": t.recurrence,
+                            "duration_minutes": t.duration_minutes,
                         }
                         for t in pet.schedule.tasks
                     ],
@@ -274,6 +310,7 @@ class Owner:
                     is_completed=t["is_completed"],
                     notes=t.get("notes", ""),
                     recurrence=t.get("recurrence"),
+                    duration_minutes=t.get("duration_minutes", 0),
                 )
                 task.assigned_pet = pet
                 pet.schedule.tasks.append(task)
@@ -281,27 +318,23 @@ class Owner:
         return owner
 
     def get_all_conflicts(self) -> list:
-        """Return warning strings for every same-time conflict across all pets."""
+        """Return warning strings for every time-range conflict across all pets."""
         warnings = []
-        # Same-pet conflicts
         for pet in self.pets:
             warnings.extend(pet.schedule.get_conflicts())
-        # Cross-pet conflicts: tasks from different pets at the same time
-        all_tasks = self.get_all_tasks()
-        seen = {}
-        for task in all_tasks:
-            if task.is_completed:
-                continue
-            key = task.due_date
-            pet_name = task.assigned_pet.name if task.assigned_pet else "Unknown"
-            if key in seen:
-                existing_pet, existing_title = seen[key]
-                if existing_pet != pet_name:
-                    time_str = task.due_date.strftime("%b %d %I:%M %p")
-                    warnings.append(
-                        f"Cross-pet conflict at {time_str}: '{existing_title}' ({existing_pet}) "
-                        f"and '{task.title}' ({pet_name})."
-                    )
-            else:
-                seen[key] = (pet_name, task.title)
+        # Cross-pet conflicts: tasks from different pets whose ranges overlap
+        active = [t for t in self.get_all_tasks() if not t.is_completed]
+        reported = set()
+        for i, a in enumerate(active):
+            for b in active[i + 1:]:
+                pet_a = a.assigned_pet.name if a.assigned_pet else "Unknown"
+                pet_b = b.assigned_pet.name if b.assigned_pet else "Unknown"
+                if pet_a != pet_b and _tasks_overlap(a, b):
+                    key = tuple(sorted([a.task_id, b.task_id]))
+                    if key not in reported:
+                        reported.add(key)
+                        warnings.append(
+                            f"Cross-pet conflict: '{a.title}' ({pet_a}, {_time_range_str(a)}) "
+                            f"overlaps with '{b.title}' ({pet_b}, {_time_range_str(b)})."
+                        )
         return warnings

@@ -59,23 +59,28 @@ if "owner" in st.session_state and st.session_state.owner.pets:
     with col3:
         priority = st.selectbox("Priority", ["low", "medium", "high"], index=2)
 
-    col4, col5 = st.columns(2)
+    col4, col5, col6 = st.columns(3)
     with col4:
         task_date = st.date_input("Due date", value=datetime.today())
     with col5:
-        task_time = st.time_input("Due time", value=datetime.now().replace(minute=0, second=0, microsecond=0))
+        task_time = st.time_input("Start time", value=datetime.now().replace(minute=0, second=0, microsecond=0))
+    with col6:
+        task_end_time = st.time_input("End time (optional)", value=datetime.now().replace(minute=0, second=0, microsecond=0))
 
     recurrence = st.selectbox("Recurrence", ["none", "daily", "weekly"])
 
     if st.button("Add Task"):
         selected_pet = next(p for p in owner.pets if p.name == selected_pet_name)
         due_dt = datetime.combine(task_date, task_time)
+        end_dt = datetime.combine(task_date, task_end_time)
+        duration_minutes = max(0, int((end_dt - due_dt).total_seconds() / 60))
         task = CareTask(
             title=task_title,
             category=category,
             priority=priority,
             due_date=due_dt,
             recurrence=None if recurrence == "none" else recurrence,
+            duration_minutes=duration_minutes,
         )
         selected_pet.schedule.add_task(task)
         owner.save_to_json(DATA_FILE)
