@@ -76,12 +76,12 @@ class Schedule:
 
     def add_task(self, task: CareTask):
         """Add a task to the schedule and assign it to this pet.
-        Prints a warning if another task is already scheduled at the same time.
+        Raises ValueError if the task overlaps an existing incomplete task.
         """
         task.assigned_pet = self.pet
         warning = self._check_conflict(task)
         if warning:
-            print(f"WARNING: {warning}")
+            raise ValueError(warning)
         self.tasks.append(task)
 
     def _check_conflict(self, new_task: CareTask) -> str:

@@ -33,8 +33,8 @@ def test_adding_task_increases_pet_task_count():
     pet = make_pet()
     assert len(pet.schedule.tasks) == 0
 
-    pet.schedule.add_task(make_task("Feed breakfast"))
-    pet.schedule.add_task(make_task("Evening walk"))
+    pet.schedule.add_task(make_task("Feed breakfast", days_offset=0))
+    pet.schedule.add_task(make_task("Evening walk", days_offset=1))
 
     assert len(pet.schedule.tasks) == 2
 
@@ -183,10 +183,9 @@ def test_same_time_tasks_for_same_pet_trigger_conflict():
     t2 = CareTask(title="Feed", category="feeding", priority="high", due_date=same_time)
 
     pet.schedule.add_task(t1)
-    pet.schedule.add_task(t2)
-
-    conflicts = pet.schedule.get_conflicts()
-    assert len(conflicts) > 0
+    with pytest.raises(ValueError, match="Feed"):
+        pet.schedule.add_task(t2)
+    assert len(pet.schedule.tasks) == 1
 
 
 def test_different_time_tasks_have_no_conflict():
@@ -210,7 +209,7 @@ def test_no_conflicts_on_empty_schedule():
 # --- Time Range Conflict Tests ---
 
 def test_overlapping_ranges_trigger_conflict():
-    """9:00–10:00 vs 9:15–10:00 should conflict (the 9:15 task starts inside the first window)."""
+    """9:00–10:00 vs 9:15–10:00 should be blocked (the 9:15 task starts inside the first window)."""
     pet = make_pet()
     t1 = CareTask(title="Vet visit", category="medical", priority="high",
                   due_date=datetime(2026, 4, 1, 9, 0), duration_minutes=60)
@@ -218,12 +217,11 @@ def test_overlapping_ranges_trigger_conflict():
                   due_date=datetime(2026, 4, 1, 9, 15), duration_minutes=45)
 
     pet.schedule.add_task(t1)
-    pet.schedule.add_task(t2)
-
-    conflicts = pet.schedule.get_conflicts()
-    assert len(conflicts) > 0
-    assert "Vet visit" in conflicts[0]
-    assert "Morning walk" in conflicts[0]
+    with pytest.raises(ValueError) as exc:
+        pet.schedule.add_task(t2)
+    assert "Vet visit" in str(exc.value)
+    assert "Morning walk" in str(exc.value)
+    assert len(pet.schedule.tasks) == 1
 
 
 def test_back_to_back_ranges_no_conflict():
@@ -255,7 +253,7 @@ def test_non_overlapping_ranges_no_conflict():
 
 
 def test_contained_range_triggers_conflict():
-    """A task fully inside another's window (9:30–10:00 within 9:00–11:00) should conflict."""
+    """A task fully inside another's window (9:30–10:00 within 9:00–11:00) should be blocked."""
     pet = make_pet()
     t1 = CareTask(title="Long vet appointment", category="medical", priority="high",
                   due_date=datetime(2026, 4, 1, 9, 0), duration_minutes=120)
@@ -263,13 +261,13 @@ def test_contained_range_triggers_conflict():
                   due_date=datetime(2026, 4, 1, 9, 30), duration_minutes=30)
 
     pet.schedule.add_task(t1)
-    pet.schedule.add_task(t2)
-
-    assert len(pet.schedule.get_conflicts()) > 0
+    with pytest.raises(ValueError, match="Pill time"):
+        pet.schedule.add_task(t2)
+    assert len(pet.schedule.tasks) == 1
 
 
 def test_ranged_task_overlaps_point_in_time():
-    """A point-in-time task at 9:30 should conflict with a 9:00–10:00 ranged task."""
+    """A point-in-time task at 9:30 should be blocked by an existing 9:00–10:00 ranged task."""
     pet = make_pet()
     t1 = CareTask(title="Vet visit", category="medical", priority="high",
                   due_date=datetime(2026, 4, 1, 9, 0), duration_minutes=60)
@@ -277,9 +275,9 @@ def test_ranged_task_overlaps_point_in_time():
                   due_date=datetime(2026, 4, 1, 9, 30), duration_minutes=0)
 
     pet.schedule.add_task(t1)
-    pet.schedule.add_task(t2)
-
-    assert len(pet.schedule.get_conflicts()) > 0
+    with pytest.raises(ValueError, match="Pill time"):
+        pet.schedule.add_task(t2)
+    assert len(pet.schedule.tasks) == 1
 
 
 def test_ranged_task_no_overlap_with_later_point_in_time():
