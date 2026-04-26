@@ -1,6 +1,6 @@
 import pytest
 from datetime import datetime, timedelta
-from pawpal_system import Owner, Pet, CareTask
+from pawpal_system import Owner, Pet, CareTask, get_schedule_suggestions
 
 
 # --- Fixtures ---
@@ -345,3 +345,131 @@ def test_recurring_task_inherits_duration_minutes():
     new_task = pet.schedule.tasks[-1]
     assert new_task.duration_minutes == 45
     assert new_task.recurrence == "daily"
+
+
+# --- Schedule Suggestion Tests ---
+
+VALID_PRIORITIES = {"high", "medium", "low"}
+VALID_CATEGORIES = {"feeding", "exercise", "grooming", "medical"}
+REQUIRED_KEYS = {"title", "category", "priority", "recurrence", "suggested_time", "duration_minutes", "reason"}
+
+
+def make_dog(age=3):
+    return Pet(name="Rex", species="dog", breed="Labrador", age=age)
+
+def make_cat(age=4):
+    return Pet(name="Luna", species="cat", breed="Siamese", age=age)
+
+def make_other(age=2):
+    return Pet(name="Pip", species="other", breed="Unknown", age=age)
+
+
+def test_suggestions_have_required_fields():
+    """Every suggestion dict must contain all required keys."""
+    for pet in [make_dog(), make_cat(), make_other()]:
+        for sugg in get_schedule_suggestions(pet):
+            assert REQUIRED_KEYS.issubset(sugg.keys()), (
+                f"Missing keys in suggestion '{sugg.get('title')}': "
+                f"{REQUIRED_KEYS - sugg.keys()}"
+            )
+
+
+def test_suggestions_have_valid_priorities():
+    for pet in [make_dog(), make_cat(), make_other()]:
+        for sugg in get_schedule_suggestions(pet):
+            assert sugg["priority"] in VALID_PRIORITIES
+
+
+def test_suggestions_have_valid_categories():
+    for pet in [make_dog(), make_cat(), make_other()]:
+        for sugg in get_schedule_suggestions(pet):
+            assert sugg["category"] in VALID_CATEGORIES
+
+
+def test_adult_dog_gets_two_feedings():
+    suggs = get_schedule_suggestions(make_dog(age=3))
+    feedings = [s for s in suggs if s["title"] == "Feeding"]
+    assert len(feedings) == 2
+
+
+def test_young_pet_gets_three_feedings():
+    """Pets under 2 years old should get 3 daily feedings."""
+    suggs = get_schedule_suggestions(make_dog(age=1))
+    feedings = [s for s in suggs if s["title"] == "Feeding"]
+    assert len(feedings) == 3
+
+
+def test_age_zero_treated_as_adult_gets_two_feedings():
+    """Age=0 (unknown) should not trigger the young-pet path — default to adult schedule."""
+    suggs = get_schedule_suggestions(make_dog(age=0))
+    feedings = [s for s in suggs if s["title"] == "Feeding"]
+    assert len(feedings) == 2
+
+
+def test_dog_suggestions_include_exercise():
+    titles = [s["title"] for s in get_schedule_suggestions(make_dog())]
+    assert "Walk / Exercise" in titles
+
+
+def test_cat_suggestions_exclude_exercise():
+    titles = [s["title"] for s in get_schedule_suggestions(make_cat())]
+    assert "Walk / Exercise" not in titles
+
+
+def test_other_species_suggestions_exclude_exercise():
+    titles = [s["title"] for s in get_schedule_suggestions(make_other())]
+    assert "Walk / Exercise" not in titles
+
+
+def test_vet_checkup_always_included():
+    for pet in [make_dog(), make_cat(), make_other()]:
+        titles = [s["title"] for s in get_schedule_suggestions(pet)]
+        assert "Vet Checkup" in titles, f"Vet Checkup missing for {pet.species}"
+
+
+def test_bath_always_included():
+    for pet in [make_dog(), make_cat(), make_other()]:
+        titles = [s["title"] for s in get_schedule_suggestions(pet)]
+        assert "Bath" in titles
+
+
+def test_teeth_brushing_always_included():
+    for pet in [make_dog(), make_cat(), make_other()]:
+        titles = [s["title"] for s in get_schedule_suggestions(pet)]
+        assert "Teeth Brushing" in titles
+
+
+def test_young_pet_vet_reason_mentions_age():
+    """Young-pet vet reason should communicate urgency of frequent visits."""
+    suggs = get_schedule_suggestions(make_dog(age=1))
+    vet = next(s for s in suggs if s["title"] == "Vet Checkup")
+    reason_lower = vet["reason"].lower()
+    assert "young" in reason_lower or "first year" in reason_lower
+
+
+def test_adult_pet_vet_reason_mentions_biannual():
+    suggs = get_schedule_suggestions(make_dog(age=3))
+    vet = next(s for s in suggs if s["title"] == "Vet Checkup")
+    assert "biannual" in vet["reason"].lower()
+
+
+def test_cat_bath_reason_differs_from_dog_bath_reason():
+    cat_bath = next(s for s in get_schedule_suggestions(make_cat()) if s["title"] == "Bath")
+    dog_bath = next(s for s in get_schedule_suggestions(make_dog()) if s["title"] == "Bath")
+    assert cat_bath["reason"] != dog_bath["reason"]
+
+
+def test_all_feedings_are_daily_recurring():
+    for pet in [make_dog(), make_cat()]:
+        for sugg in get_schedule_suggestions(pet):
+            if sugg["title"] == "Feeding":
+                assert sugg["recurrence"] == "daily"
+
+
+def test_suggestion_reason_references_pet_name():
+    """Reasons should be personalised with the pet's name."""
+    pet = Pet(name="Biscuit", species="dog", breed="Beagle", age=2)
+    for sugg in get_schedule_suggestions(pet):
+        assert "Biscuit" in sugg["reason"], (
+            f"Reason for '{sugg['title']}' does not mention the pet's name"
+        )

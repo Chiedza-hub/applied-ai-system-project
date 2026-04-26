@@ -1,7 +1,7 @@
 import os
 import streamlit as st
 from datetime import datetime
-from pawpal_system import Owner, Pet, CareTask, Schedule
+from pawpal_system import Owner, Pet, CareTask, Schedule, get_schedule_suggestions
 
 st.set_page_config(page_title="PawPal+", page_icon="🐾", layout="centered")
 st.title("🐾 PawPal+")
@@ -14,137 +14,6 @@ if "owner" not in st.session_state:
 
 PRIORITY_ICON = {"high": "🔴", "medium": "🟡", "low": "🟢"}
 CATEGORY_ICON = {"feeding": "🍽️", "exercise": "🏃", "grooming": "✂️", "medical": "🏥"}
-
-
-def get_schedule_suggestions(pet: Pet) -> list:
-    """Return species- and age-aware care schedule suggestions for a pet."""
-    species = pet.species.lower()
-    age = pet.age
-    is_young = 0 < age < 2
-    name = pet.name
-    suggestions = []
-
-    # --- Feedings ---
-    if is_young:
-        feeding_times = ["7:00 AM", "12:00 PM", "6:00 PM"]
-        feeding_reason = (
-            f"{name} is under 2 years old and needs 3 meals per day to support rapid growth, "
-            f"stable blood sugar, and healthy development."
-        )
-    else:
-        feeding_times = ["7:00 AM", "6:00 PM"]
-        feeding_reason = (
-            f"Adult {species}s thrive on two consistent daily meals. Regular feeding times "
-            f"support healthy digestion, stable energy levels, and help prevent overeating."
-        )
-    for t in feeding_times:
-        suggestions.append({
-            "title": "Feeding",
-            "category": "feeding",
-            "priority": "high",
-            "recurrence": "daily",
-            "suggested_time": t,
-            "duration_minutes": 15,
-            "reason": feeding_reason,
-        })
-
-    # --- Bath ---
-    if species == "cat":
-        bath_reason = (
-            f"Cats are naturally self-grooming, but a bath every 4–6 weeks reduces shedding, "
-            f"minimizes hairballs, and keeps {name}'s skin healthy — especially for indoor cats."
-        )
-    elif species == "dog":
-        bath_reason = (
-            f"Monthly baths keep {name}'s coat clean and odor-free, prevent skin irritation, "
-            f"and give you a chance to check for ticks, lumps, or skin issues."
-        )
-    else:
-        bath_reason = (
-            f"Regular bathing every 4–6 weeks helps maintain {name}'s coat and skin health."
-        )
-    suggestions.append({
-        "title": "Bath",
-        "category": "grooming",
-        "priority": "medium",
-        "recurrence": "weekly",
-        "suggested_time": "10:00 AM",
-        "duration_minutes": 30,
-        "reason": bath_reason,
-    })
-
-    # --- Vet Checkup ---
-    if is_young:
-        vet_reason = (
-            f"{name} is young and needs frequent vet visits — every 3–4 weeks during the first year "
-            f"for vaccinations, deworming, and growth monitoring."
-        )
-    else:
-        vet_reason = (
-            f"Biannual vet checkups allow your vet to catch health issues early, keep {name}'s "
-            f"vaccinations current, and monitor age-related changes before they become serious."
-        )
-    suggestions.append({
-        "title": "Vet Checkup",
-        "category": "medical",
-        "priority": "high",
-        "recurrence": None,
-        "suggested_time": "9:00 AM",
-        "duration_minutes": 60,
-        "reason": vet_reason,
-    })
-
-    # --- Nail Trim ---
-    if species == "cat":
-        nail_reason = (
-            f"Cat nails grow quickly — trimming every 2–3 weeks prevents painful ingrown nails, "
-            f"reduces scratching damage, and keeps {name} comfortable."
-        )
-    else:
-        nail_reason = (
-            f"Trimming {name}'s nails every 3–4 weeks prevents overgrowth that can cause "
-            f"joint strain, affect gait, and lead to painful nail breaks."
-        )
-    suggestions.append({
-        "title": "Nail Trim",
-        "category": "grooming",
-        "priority": "medium",
-        "recurrence": None,
-        "suggested_time": "11:00 AM",
-        "duration_minutes": 20,
-        "reason": nail_reason,
-    })
-
-    # --- Exercise (dogs only) ---
-    if species == "dog":
-        suggestions.append({
-            "title": "Walk / Exercise",
-            "category": "exercise",
-            "priority": "high",
-            "recurrence": "daily",
-            "suggested_time": "8:00 AM",
-            "duration_minutes": 30,
-            "reason": (
-                f"Dogs need daily physical activity for cardiovascular health, weight management, "
-                f"and mental stimulation. A morning walk helps {name} stay calm and focused all day."
-            ),
-        })
-
-    # --- Dental Care ---
-    suggestions.append({
-        "title": "Teeth Brushing",
-        "category": "grooming",
-        "priority": "low",
-        "recurrence": "daily",
-        "suggested_time": "8:00 PM",
-        "duration_minutes": 10,
-        "reason": (
-            f"Brushing {name}'s teeth regularly reduces plaque buildup, prevents gum disease, "
-            f"and avoids costly dental procedures — a quick daily habit with big long-term benefits."
-        ),
-    })
-
-    return suggestions
 
 
 st.divider()
