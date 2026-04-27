@@ -1,0 +1,50 @@
+{
+  "name": "Jordan",
+  "email": "",
+  "phone": "",
+  "pets": [
+    {
+      "name": "Mochi",
+      "species": "dog",
+      "breed": "Shiba Inu",
+      "age": 3,
+      "pet_id": "e6e6d54f-e301-4242-ab35-50ea897d82d6",
+      "medications": [],
+      "tasks": [
+        {
+          "task_id": "c01aaf2c-9543-4c75-8f18-93d6e0b2a54b",
+          "title": "Morning walk",
+          "category": "exercise",
+          "priority": "high",
+          "due_date": "2026-04-28T08:00:00",
+          "is_completed": false,
+          "notes": "",
+          "recurrence": null,
+          "duration_minutes": 0
+        },
+        {
+          "task_id": "b1b76fe9-4ae3-41cc-85a0-fd4634836787",
+          "title": "Morning walk",
+          "category": "feeding",
+          "priority": "high",
+          "due_date": "2026-04-27T07:30:00",
+          "is_completed": false,
+          "notes": "",
+          "recurrence": null,
+          "duration_minutes": 0
+        },
+        {
+          "task_id": "c3888801-444c-4acf-b2bc-a37c3c314993",
+          "title": "Morning walk",
+          "category": "exercise",
+          "priority": "high",
+          "due_date": "2026-04-29T08:00:00",
+          "is_completed": false,
+          "notes": "",
+          "recurrence": null,
+          "duration_minutes": 0
+        }
+      ]
+    }
+  ]
+}
