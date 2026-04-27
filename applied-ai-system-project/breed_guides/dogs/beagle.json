@@ -1,0 +1,38 @@
+{
+  "breed": "Beagle",
+  "species": "dog",
+  "aliases": ["beagle", "beagles"],
+  "size": "small to medium (18-30 lb)",
+  "exercise": {
+    "daily_minutes": 60,
+    "intensity": "moderate",
+    "details": "Beagles need at least 1 hour of exercise daily. They have tremendous stamina and were bred to follow scent trails for hours. Always exercise in a securely fenced area — Beagles will follow their nose and ignore recall commands completely when on a scent. Off-leash exercise in unfenced areas is dangerous. They enjoy scent work games, fetch, and exploring trails on a long lead.",
+    "recommended_activities": ["scent work", "nose work classes", "fetch", "hiking on leash", "agility", "tracking"]
+  },
+  "grooming": {
+    "brushing_frequency": "weekly",
+    "bathing_frequency": "every 4-6 weeks",
+    "shedding_level": "moderate to high",
+    "professional_grooming": "minimal; every 8-12 weeks optional",
+    "details": "Beagles have a short, dense double coat that is easy to maintain with weekly brushing using a hound mitt or rubber brush. They shed moderately year-round. Ear care is critical — their long floppy ears trap moisture and are highly prone to infections. Clean ears weekly and after swimming. Trim nails every 2-3 weeks."
+  },
+  "diet": {
+    "meals_per_day": 2,
+    "daily_calories_adult": "700-900 kcal",
+    "notes": "Beagles are highly food-motivated and prone to obesity. They will counter-surf, get into trash, and overeat if given the chance. Secure all food storage. Measure portions carefully and use food puzzles to slow eating. Their weight should be checked monthly — obesity dramatically reduces lifespan and causes joint problems."
+  },
+  "health": {
+    "lifespan_years": "12-15",
+    "common_conditions": ["epilepsy", "hypothyroidism", "hip dysplasia", "intervertebral disc disease (IVDD)", "cherry eye", "ear infections"],
+    "vet_checkups": "annually",
+    "notes": "Beagles are generally robust, but epilepsy occurs at higher rates than average. Ear infections are among the most common vet visits — preventive weekly ear cleaning significantly reduces this risk."
+  },
+  "temperament": {
+    "energy_level": "moderate to high",
+    "trainability": "moderate — intelligent but independent and scent-driven",
+    "good_with_children": true,
+    "good_with_other_pets": true,
+    "notes": "Beagles are merry, curious, and friendly. Their hound independence makes recall training challenging — management (leash, fencing) is more reliable than off-leash recall. They are vocal and will bay and howl, which can be an issue in apartments. They thrive in packs and do well with other dogs. Rarely aggressive."
+  },
+  "care_summary": "Beagles are cheerful, sturdy scent hounds that require secure containment, weekly ear care, and strict food management to prevent obesity. Their independent nature means training requires patience and consistency. They are excellent family dogs but their baying and nose-following tendencies need management."
+}

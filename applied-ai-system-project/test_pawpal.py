@@ -473,3 +473,171 @@ def test_suggestion_reason_references_pet_name():
         assert "Biscuit" in sugg["reason"], (
             f"Reason for '{sugg['title']}' does not mention the pet's name"
         )
+
+
+# ── Breed Q&A Agent Tests ────────────────────────────────────────────────────
+
+from breed_qa_agent import _load_guides, _find_relevant_guides
+
+REQUIRED_GUIDE_KEYS = {"breed", "species", "exercise", "grooming", "diet", "health", "temperament"}
+VALID_SPECIES = {"dog", "cat"}
+ALL_BREEDS = [
+    "Border Collie", "Golden Retriever", "Labrador Retriever",
+    "German Shepherd", "Bulldog", "Poodle", "Beagle", "Siberian Husky",
+    "Persian", "Siamese", "Maine Coon", "Ragdoll",
+]
+
+
+# --- Guide loading ---
+
+def test_load_guides_returns_nonempty_list():
+    guides = _load_guides()
+    assert len(guides) > 0
+
+
+def test_load_guides_returns_all_twelve_breeds():
+    guides = _load_guides()
+    assert len(guides) == 12
+
+
+def test_every_guide_has_required_keys():
+    for guide in _load_guides():
+        missing = REQUIRED_GUIDE_KEYS - guide.keys()
+        assert not missing, f"{guide.get('breed')} is missing keys: {missing}"
+
+
+def test_every_guide_has_valid_species():
+    for guide in _load_guides():
+        assert guide["species"] in VALID_SPECIES, (
+            f"{guide.get('breed')} has unexpected species '{guide['species']}'"
+        )
+
+
+def test_every_guide_has_exercise_daily_minutes():
+    """Each guide's exercise section must include a numeric daily_minutes field."""
+    for guide in _load_guides():
+        minutes = guide["exercise"].get("daily_minutes")
+        assert isinstance(minutes, (int, float)) and minutes > 0, (
+            f"{guide.get('breed')} missing valid exercise.daily_minutes"
+        )
+
+
+def test_every_guide_has_lifespan():
+    for guide in _load_guides():
+        lifespan = guide["health"].get("lifespan_years")
+        assert lifespan, f"{guide.get('breed')} missing health.lifespan_years"
+
+
+def test_every_guide_has_care_summary():
+    for guide in _load_guides():
+        assert guide.get("care_summary"), f"{guide.get('breed')} missing care_summary"
+
+
+def test_all_expected_breeds_present():
+    loaded_names = {g["breed"] for g in _load_guides()}
+    for breed in ALL_BREEDS:
+        assert breed in loaded_names, f"Expected breed '{breed}' not found in guides"
+
+
+# --- Retrieval: exact breed name matching ---
+
+def test_exact_breed_name_returns_correct_guide():
+    guides = _load_guides()
+    result = _find_relevant_guides("How much exercise does a Border Collie need?", guides)
+    assert len(result) == 1
+    assert result[0]["breed"] == "Border Collie"
+
+
+def test_exact_breed_name_case_insensitive():
+    guides = _load_guides()
+    result = _find_relevant_guides("tell me about GOLDEN RETRIEVER grooming", guides)
+    assert len(result) == 1
+    assert result[0]["breed"] == "Golden Retriever"
+
+
+def test_alias_match_returns_correct_guide():
+    """'lab' is an alias for Labrador Retriever."""
+    guides = _load_guides()
+    result = _find_relevant_guides("How much should I feed my lab?", guides)
+    assert len(result) == 1
+    assert result[0]["breed"] == "Labrador Retriever"
+
+
+def test_alias_plural_match():
+    """'huskies' is an alias for Siberian Husky."""
+    guides = _load_guides()
+    result = _find_relevant_guides("Are huskies good apartment dogs?", guides)
+    assert len(result) == 1
+    assert result[0]["breed"] == "Siberian Husky"
+
+
+def test_cat_breed_name_match():
+    guides = _load_guides()
+    result = _find_relevant_guides("How do I groom a Persian cat?", guides)
+    assert len(result) == 1
+    assert result[0]["breed"] == "Persian"
+
+
+# --- Retrieval: species keyword fallback ---
+
+def test_dog_keyword_returns_only_dog_guides():
+    guides = _load_guides()
+    result = _find_relevant_guides("what exercise does a dog need?", guides)
+    assert all(g["species"] == "dog" for g in result)
+
+
+def test_cat_keyword_returns_only_cat_guides():
+    guides = _load_guides()
+    result = _find_relevant_guides("how often should I groom my cat?", guides)
+    assert all(g["species"] == "cat" for g in result)
+
+
+def test_species_fallback_respects_top_k():
+    guides = _load_guides()
+    result = _find_relevant_guides("how much do dogs eat?", guides, top_k=2)
+    assert len(result) <= 2
+
+
+def test_unknown_question_returns_at_most_top_k_guides():
+    guides = _load_guides()
+    result = _find_relevant_guides("what is the best pet food brand?", guides, top_k=2)
+    assert len(result) <= 2
+
+
+# --- Retrieval: data correctness spot-checks ---
+
+def test_border_collie_exercise_minutes_is_120():
+    guides = _load_guides()
+    [bc] = _find_relevant_guides("Border Collie exercise", guides)
+    assert bc["exercise"]["daily_minutes"] == 120
+
+
+def test_bulldog_exercise_minutes_is_30():
+    """Bulldogs are low-energy — the guide should reflect their 30-minute ceiling."""
+    guides = _load_guides()
+    [bd] = _find_relevant_guides("Bulldog exercise", guides)
+    assert bd["exercise"]["daily_minutes"] == 30
+
+
+def test_persian_brushing_frequency_is_daily():
+    guides = _load_guides()
+    [persian] = _find_relevant_guides("Persian grooming", guides)
+    assert "daily" in persian["grooming"]["brushing_frequency"].lower()
+
+
+def test_maine_coon_species_is_cat():
+    guides = _load_guides()
+    [mc] = _find_relevant_guides("Maine Coon health", guides)
+    assert mc["species"] == "cat"
+
+
+def test_poodle_shedding_level_mentions_hypoallergenic():
+    guides = _load_guides()
+    [poodle] = _find_relevant_guides("Poodle shedding", guides)
+    assert "hypoallergenic" in poodle["grooming"]["shedding_level"].lower()
+
+
+def test_no_guides_returns_empty_list():
+    """_find_relevant_guides on an empty list should return an empty list."""
+    result = _find_relevant_guides("Border Collie exercise", [], top_k=2)
+    assert result == []

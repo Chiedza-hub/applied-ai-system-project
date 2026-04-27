@@ -1,0 +1,38 @@
+{
+  "breed": "Persian",
+  "species": "cat",
+  "aliases": ["persian", "persians", "persian cat", "persian cats"],
+  "size": "medium (7-12 lb)",
+  "exercise": {
+    "daily_minutes": 20,
+    "intensity": "low",
+    "details": "Persians are calm, low-activity cats content with gentle indoor play. Two 10-minute interactive play sessions per day with wand toys or feather teasers are sufficient. They prefer quiet environments and are not climbers or jumpers. Avoid stressful or loud environments — they are sensitive and anxiety-prone.",
+    "recommended_activities": ["wand toys", "gentle fetch", "puzzle feeders", "watching birds from a window perch"]
+  },
+  "grooming": {
+    "brushing_frequency": "daily — non-negotiable",
+    "bathing_frequency": "every 4-6 weeks",
+    "shedding_level": "high",
+    "professional_grooming": "every 6-8 weeks; lion cuts considered for low-maintenance option",
+    "details": "Persians have a long, dense double coat that mats within days without daily brushing. Use a wide-tooth comb and slicker brush, focusing on the armpits, groin, and behind the ears where mats form fastest. Neglected coats require shaving under anesthesia. In addition, Persians need daily face wiping — their flat face causes excessive tear staining and discharge that must be cleaned to prevent skin infections. Eyes should be wiped 1-2 times daily with a damp cloth."
+  },
+  "diet": {
+    "meals_per_day": 2,
+    "daily_calories_adult": "200-300 kcal",
+    "notes": "Feed high-quality wet food supplemented with dry kibble. Wet food is particularly beneficial for Persian kidney health and hydration. Their flat face makes it difficult to eat from deep bowls — use flat, wide plates or shallow bowls. Monitor weight carefully as their sedentary lifestyle makes obesity common."
+  },
+  "health": {
+    "lifespan_years": "12-17",
+    "common_conditions": ["polycystic kidney disease (PKD)", "brachycephalic obstructive airway syndrome", "dental disease", "eye conditions (entropion, cherry eye)", "skin fold dermatitis", "bladder stones"],
+    "vet_checkups": "every 6-12 months; PKD DNA testing or ultrasound strongly recommended",
+    "notes": "PKD affects approximately 40% of Persians — it is an inherited, progressive kidney disease detectable by DNA test or ultrasound at 10 months+. All Persians should be tested. Their flat face causes dental crowding, making regular dental cleanings under anesthesia important."
+  },
+  "temperament": {
+    "energy_level": "very low",
+    "trainability": "low — not highly responsive to training but can learn basics",
+    "good_with_children": true,
+    "good_with_other_pets": true,
+    "notes": "Persians are gentle, quiet, and affectionate but not demanding. They prefer calm households and are stressed by loud environments or rough handling. They are lap cats that enjoy close companionship but are not as vocal or interactive as breeds like Siamese. They adapt poorly to change."
+  },
+  "care_summary": "Persians are high-maintenance cats requiring daily coat brushing, daily face wiping, and proactive kidney disease monitoring. Their grooming needs are the highest of any cat breed — owners must commit to daily coat care or opt for a professional lion cut every 6-8 weeks. In exchange, they are calm, loving companions ideal for quiet homes."
+}

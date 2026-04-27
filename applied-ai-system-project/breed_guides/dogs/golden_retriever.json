@@ -1,0 +1,38 @@
+{
+  "breed": "Golden Retriever",
+  "species": "dog",
+  "aliases": ["golden retriever", "golden retrievers", "golden", "goldens"],
+  "size": "large",
+  "exercise": {
+    "daily_minutes": 60,
+    "intensity": "moderate to high",
+    "details": "Golden Retrievers need at least 1 hour of exercise daily, ideally split into two sessions — a morning and evening walk/play session. They love swimming, fetch, and hiking. Puppies under 18 months should avoid high-impact exercise (jumping, long runs) to protect developing joints. Adult Goldens are adaptable and enjoy both vigorous hikes and gentle strolls.",
+    "recommended_activities": ["swimming", "fetch", "hiking", "running", "agility", "dock diving", "therapy work"]
+  },
+  "grooming": {
+    "brushing_frequency": "3-4 times per week",
+    "bathing_frequency": "every 3-6 weeks",
+    "shedding_level": "very high",
+    "professional_grooming": "every 6-8 weeks",
+    "details": "Golden Retrievers have a dense double coat that sheds heavily year-round, with intense shedding in spring and fall. Brush 3-4 times per week with a slicker brush and undercoat rake. Pay extra attention to feathering on legs, chest, and tail. Regular ear cleaning is essential as floppy ears trap moisture and are prone to infections."
+  },
+  "diet": {
+    "meals_per_day": 2,
+    "daily_calories_adult": "1200-1800 kcal",
+    "notes": "Goldens are highly food-motivated and prone to obesity — measure portions carefully and limit treats to 10% of daily calories. Feed a large-breed adult formula. Avoid free-feeding. Goldens are at elevated risk for bloat (GDV); consider a raised bowl and avoid vigorous exercise within 1 hour of meals."
+  },
+  "health": {
+    "lifespan_years": "10-12",
+    "common_conditions": ["hip and elbow dysplasia", "cancer (highest rate of any breed)", "heart disease (SAS)", "skin allergies", "ear infections", "obesity"],
+    "vet_checkups": "annually; cardiac exams recommended by GRCA protocol",
+    "notes": "Cancer is the leading cause of death in Golden Retrievers, affecting ~60% of the breed. Regular vet screenings and early detection are critical. Hip and elbow X-rays (OFA certification) are recommended before breeding."
+  },
+  "temperament": {
+    "energy_level": "moderate to high",
+    "trainability": "excellent — eager to please, highly food motivated",
+    "good_with_children": true,
+    "good_with_other_pets": true,
+    "notes": "Golden Retrievers are famously friendly, patient, and gentle. They make poor guard dogs due to their friendliness with strangers. They thrive on human companionship and suffer from separation anxiety if left alone for extended periods. Excellent family dogs and highly successful as therapy and service dogs."
+  },
+  "care_summary": "Golden Retrievers are affectionate, adaptable family dogs that need consistent exercise, careful weight management, and proactive cancer screenings. Their heavy shedding requires frequent brushing. They bond deeply with their families and need regular interaction to prevent separation anxiety."
+}

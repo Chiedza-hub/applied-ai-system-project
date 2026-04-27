@@ -1,0 +1,38 @@
+{
+  "breed": "Bulldog",
+  "species": "dog",
+  "aliases": ["bulldog", "bulldogs", "english bulldog", "british bulldog"],
+  "size": "medium",
+  "exercise": {
+    "daily_minutes": 30,
+    "intensity": "low",
+    "details": "Bulldogs need only 20-40 minutes of light exercise daily — two short walks of 15-20 minutes each. They are a brachycephalic (flat-faced) breed prone to overheating and respiratory distress. Exercise must always be in cool conditions — avoid any outdoor activity when temperatures exceed 75°F (24°C). Never let a Bulldog exercise until exhausted. They prefer lounging and short play sessions.",
+    "recommended_activities": ["short walks", "gentle indoor play", "swimming (with supervision — many cannot swim)"]
+  },
+  "grooming": {
+    "brushing_frequency": "weekly",
+    "bathing_frequency": "every 3-4 weeks",
+    "shedding_level": "moderate",
+    "professional_grooming": "every 6-8 weeks",
+    "details": "Beyond standard brushing, Bulldogs require daily cleaning of their facial skin folds with a damp cloth or unscented baby wipe to prevent yeast and bacterial infections. Dry the folds thoroughly after cleaning. Their tail pocket (if present) must also be cleaned daily. Ear cleaning weekly. Trim nails every 2-3 weeks."
+  },
+  "diet": {
+    "meals_per_day": 2,
+    "daily_calories_adult": "800-1100 kcal",
+    "notes": "Bulldogs have low activity levels and gain weight easily — strict portion control is critical. Obesity worsens their already-compromised breathing. Avoid feeding immediately before or after any activity. Some Bulldogs are sensitive to grains; monitor for skin reactions and gas. Slow-feed bowls help reduce gulping and flatulence."
+  },
+  "health": {
+    "lifespan_years": "8-10",
+    "common_conditions": ["brachycephalic obstructive airway syndrome (BOAS)", "hip dysplasia", "cherry eye", "entropion", "skin fold dermatitis", "heat stroke", "joint problems", "cardiac disease"],
+    "vet_checkups": "every 6 months recommended due to multiple health vulnerabilities",
+    "notes": "BOAS causes significant breathing difficulties and often requires surgical correction (soft palate resection, nostril widening). Heat stroke is a medical emergency for Bulldogs. They should never be left in a hot car or outside in summer. Many cannot give birth naturally and require C-sections."
+  },
+  "temperament": {
+    "energy_level": "low",
+    "trainability": "moderate — stubborn but responds to food motivation",
+    "good_with_children": true,
+    "good_with_other_pets": true,
+    "notes": "Bulldogs are gentle, affectionate, and famously stubborn. They are excellent apartment dogs due to their low exercise needs. They form strong bonds with families, are tolerant with children, and are generally non-aggressive. They snore loudly and are prone to flatulence. They do not do well in heat and prefer air-conditioned environments."
+  },
+  "care_summary": "Bulldogs are low-energy companions requiring minimal exercise but intensive daily maintenance — fold cleaning is non-negotiable to prevent infections. Their brachycephalic anatomy makes heat management the top safety priority. Expect significant veterinary costs; health insurance is strongly recommended."
+}

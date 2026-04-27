@@ -1,0 +1,38 @@
+{
+  "breed": "German Shepherd",
+  "species": "dog",
+  "aliases": ["german shepherd", "german shepherds", "gsd", "alsatian"],
+  "size": "large",
+  "exercise": {
+    "daily_minutes": 120,
+    "intensity": "high",
+    "details": "German Shepherds need at least 2 hours of exercise daily, combining physical activity with mental stimulation. They excel at obedience, tracking, protection sports, agility, and hiking. A bored German Shepherd will vocalize excessively, dig, or become destructive. Off-leash time in a secure area is important for proper physical development.",
+    "recommended_activities": ["obedience training", "agility", "tracking", "hiking", "Schutzhund/IPO", "fetch", "swimming"]
+  },
+  "grooming": {
+    "brushing_frequency": "3-4 times per week",
+    "bathing_frequency": "every 6-8 weeks",
+    "shedding_level": "very high — known as 'German Shedder'",
+    "professional_grooming": "every 2-3 months",
+    "details": "German Shepherds have a double coat (short or long variety) that sheds heavily year-round with two major shedding seasons. Brush 3-4 times weekly with an undercoat rake and slicker brush. During shedding season, daily brushing is necessary. Never shave the coat. Trim nails every 3-4 weeks and clean ears weekly."
+  },
+  "diet": {
+    "meals_per_day": 2,
+    "daily_calories_adult": "1400-2100 kcal",
+    "notes": "Feed a large-breed adult formula with high-quality protein. Active working dogs may need significantly more calories. Avoid bloat: do not exercise within 1-2 hours of meals, use slow-feed bowls, and consider multiple smaller meals. GSDs can be sensitive to grain-heavy diets — monitor for skin and digestive reactions."
+  },
+  "health": {
+    "lifespan_years": "9-13",
+    "common_conditions": ["hip and elbow dysplasia", "degenerative myelopathy (DM)", "bloat/GDV", "exocrine pancreatic insufficiency (EPI)", "perianal fistulas"],
+    "vet_checkups": "annually; OFA hip/elbow testing and DM DNA screening recommended",
+    "notes": "Degenerative myelopathy is a progressive spinal disease common in the breed; DNA testing can identify carriers. Hip dysplasia is prevalent — maintain healthy weight and avoid over-exercise during puppyhood. EPI causes dramatic weight loss despite good appetite; blood tests can diagnose it."
+  },
+  "temperament": {
+    "energy_level": "high",
+    "trainability": "excellent — highly versatile working dog",
+    "good_with_children": true,
+    "good_with_other_pets": true,
+    "notes": "German Shepherds are loyal, courageous, and deeply bonded to their family. They are naturally protective and can be aloof with strangers — early and extensive socialization is essential to prevent fearfulness or aggression. They require a confident, consistent owner. Not recommended for first-time dog owners."
+  },
+  "care_summary": "German Shepherds are demanding, highly intelligent working dogs that need 2+ hours of exercise, significant mental stimulation, and strong leadership daily. They shed prolifically and are prone to joint and spinal issues requiring proactive monitoring. Experienced owners who can commit to training and activity will find them extraordinarily loyal companions."
+}

@@ -1,0 +1,38 @@
+{
+  "breed": "Border Collie",
+  "species": "dog",
+  "aliases": ["border collie", "border collies"],
+  "size": "medium",
+  "exercise": {
+    "daily_minutes": 120,
+    "intensity": "very high",
+    "details": "Border Collies need at least 2 hours of vigorous exercise daily. Simple leash walks are not enough — they need off-leash running, fetch, frisbee, agility courses, or herding activities. Mental stimulation is equally critical: puzzle feeders, obedience training sessions, and trick learning must complement physical exercise. Without sufficient activity, they develop destructive behaviors like chewing, digging, and obsessive circling.",
+    "recommended_activities": ["agility", "frisbee", "fetch", "herding", "hiking", "running", "flyball", "trick training"]
+  },
+  "grooming": {
+    "brushing_frequency": "2-3 times per week",
+    "bathing_frequency": "every 4-8 weeks",
+    "shedding_level": "high",
+    "professional_grooming": "every 2-3 months",
+    "details": "Border Collies have a double coat (rough or smooth variety). Brush 2-3 times per week to prevent matting, especially behind the ears and on the hindquarters. During spring and fall shedding seasons, daily brushing is recommended. Never shave the double coat — it protects against both heat and cold. Check and clean ears weekly."
+  },
+  "diet": {
+    "meals_per_day": 2,
+    "daily_calories_adult": "900-1400 kcal",
+    "notes": "Feed high-quality protein-rich kibble or raw diet sized for a medium active dog. Highly active working Border Collies may need up to 1600 kcal/day. Avoid overfeeding — despite their energy, they can gain weight. Fresh water must always be available."
+  },
+  "health": {
+    "lifespan_years": "12-15",
+    "common_conditions": ["hip dysplasia", "collie eye anomaly (CEA)", "epilepsy", "MDR1 gene mutation", "progressive retinal atrophy"],
+    "vet_checkups": "annually; DNA testing recommended before breeding",
+    "notes": "MDR1 mutation makes some Border Collies sensitive to certain drugs (ivermectin, loperamide). Always inform your vet of this risk. Eye exams by a veterinary ophthalmologist are recommended annually."
+  },
+  "temperament": {
+    "energy_level": "very high",
+    "trainability": "exceptional — ranked #1 most intelligent dog breed",
+    "good_with_children": true,
+    "good_with_other_pets": true,
+    "notes": "Border Collies need a job to do. They bond intensely with one person and can develop anxiety without structure. Not recommended for apartment living or sedentary households. They may try to herd children and other pets. Early socialization is essential."
+  },
+  "care_summary": "Border Collies are the world's most intelligent dog breed and require an extraordinary level of physical and mental engagement. A committed, active owner who can provide 2+ hours of varied exercise plus structured mental challenges daily is essential. They thrive in homes with yards, active lifestyles, and experienced dog owners."
+}

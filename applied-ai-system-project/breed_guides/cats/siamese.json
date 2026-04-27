@@ -1,0 +1,38 @@
+{
+  "breed": "Siamese",
+  "species": "cat",
+  "aliases": ["siamese", "siamese cat", "siamese cats"],
+  "size": "medium (6-14 lb)",
+  "exercise": {
+    "daily_minutes": 30,
+    "intensity": "moderate to high",
+    "details": "Siamese are highly active and social cats needing 2-3 interactive play sessions of 10-15 minutes each day. They love chasing, climbing, and puzzle toys. Without adequate stimulation, they become destructive and excessively vocal. They do best with a companion cat or in homes where someone is around most of the day. Cat trees and window perches are essential.",
+    "recommended_activities": ["wand toys", "laser pointer", "puzzle feeders", "fetch", "supervised outdoor harness walks", "cat trees"]
+  },
+  "grooming": {
+    "brushing_frequency": "once per week",
+    "bathing_frequency": "every 6-8 weeks or as needed",
+    "shedding_level": "low to moderate",
+    "professional_grooming": "rarely needed",
+    "details": "Siamese have a short, fine single-layer coat that is easy to maintain with weekly brushing. They are light shedders. Use a rubber grooming mitt or soft slicker brush. Check ears weekly for wax buildup and clean as needed. Dental care is important — brush teeth 2-3 times per week or provide dental treats."
+  },
+  "diet": {
+    "meals_per_day": 2,
+    "daily_calories_adult": "200-280 kcal",
+    "notes": "Siamese are naturally lean and should not be allowed to become overweight, which can cause joint stress. Feed high-quality wet and dry food on a schedule rather than free-feeding. They can be picky eaters — if switching foods, transition gradually over 7-10 days. Avoid dairy products."
+  },
+  "health": {
+    "lifespan_years": "15-20",
+    "common_conditions": ["progressive retinal atrophy", "amyloidosis (liver disease)", "asthma and respiratory issues", "dental disease", "mediastinal lymphoma"],
+    "vet_checkups": "annually",
+    "notes": "Siamese are one of the longer-lived cat breeds. Amyloidosis (protein deposits in organs) is heritable and can affect liver function. Siamese are particularly prone to respiratory disease — avoid smoke, dust, and aerosol sprays in the home. Dental disease is common; regular dental cleanings are recommended."
+  },
+  "temperament": {
+    "energy_level": "high",
+    "trainability": "high — can learn tricks, fetch, and leash walking",
+    "good_with_children": true,
+    "good_with_other_pets": true,
+    "notes": "Siamese are the most vocal cat breed — they will 'talk' loudly and persistently to communicate. They are deeply bonded to their people and suffer separation anxiety if left alone for long periods. They are highly intelligent and mischievous. Their social needs make them better suited to homes with another cat or a very present owner."
+  },
+  "care_summary": "Siamese are low-grooming but high-engagement cats requiring daily interaction and mental stimulation. Their vocalization and social needs are the most important care consideration — they thrive with companionship. Owners should expect a chatty, affectionate cat that forms an intense bond and demands attention throughout the day."
+}

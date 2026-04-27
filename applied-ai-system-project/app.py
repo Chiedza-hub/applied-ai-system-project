@@ -3,6 +3,7 @@ import streamlit as st
 from datetime import datetime
 from pawpal_system import Owner, Pet, CareTask, Schedule, get_schedule_suggestions
 from overdue_agent import run_recovery_agent
+from breed_qa_agent import answer_breed_question
 
 st.set_page_config(page_title="PawPal+", page_icon="🐾", layout="centered")
 st.title("🐾 PawPal+")
@@ -369,3 +370,76 @@ if "owner" in st.session_state and st.session_state.owner.pets:
                         st.rerun()
 else:
     st.info("Add a pet and tasks above before using the recovery agent.")
+
+st.divider()
+st.subheader("🐕 Breed Care Q&A")
+st.caption(
+    "Ask anything about a specific breed — exercise needs, grooming schedules, health risks, diet, and more. "
+    "Answers are grounded in the PawPal breed guide library, not generic AI output."
+)
+
+EXAMPLE_QUESTIONS = [
+    "How much exercise does a Border Collie need?",
+    "How often should I groom a Golden Retriever?",
+    "What health issues should I watch for in a Maine Coon?",
+    "How much should I feed a Labrador Retriever?",
+    "Are Siberian Huskies good apartment dogs?",
+    "How do I take care of a Persian cat's coat?",
+]
+
+with st.expander("Example questions", expanded=False):
+    for q in EXAMPLE_QUESTIONS:
+        st.markdown(f"- {q}")
+
+breed_question = st.text_input(
+    "Ask a breed care question",
+    placeholder="e.g. How much exercise does a Border Collie need?",
+    key="breed_question_input",
+)
+
+if st.button("🔍 Ask", type="primary", key="breed_qa_submit"):
+    if not breed_question.strip():
+        st.warning("Please enter a question first.")
+    else:
+        with st.spinner("Retrieving breed guide and generating answer…"):
+            try:
+                result = answer_breed_question(breed_question.strip())
+                st.session_state.breed_qa_result = result
+                st.session_state.breed_qa_question = breed_question.strip()
+            except Exception as e:
+                st.session_state.breed_qa_error = str(e)
+        st.rerun()
+
+if st.session_state.get("breed_qa_error"):
+    st.error(f"Q&A error: {st.session_state.pop('breed_qa_error')}")
+
+if "breed_qa_result" in st.session_state:
+    result = st.session_state.breed_qa_result
+    question = st.session_state.get("breed_qa_question", "")
+
+    confidence = result.get("confidence", "low")
+    confidence_badge = {"high": "🟢 High", "medium": "🟡 Medium", "low": "🔴 Low"}.get(confidence, "🔴 Low")
+    sources = result.get("sources", [])
+    sources_str = ", ".join(sources) if sources else "no guide matched"
+
+    st.markdown("---")
+    st.markdown(f"**Q: {question}**")
+    st.info(result.get("answer", ""))
+
+    key_facts = result.get("key_facts", [])
+    if key_facts:
+        with st.expander("Supporting facts from breed guide", expanded=True):
+            for fact in key_facts:
+                st.markdown(f"- {fact}")
+
+    col1, col2 = st.columns(2)
+    with col1:
+        st.caption(f"Source guide(s): **{sources_str}**")
+    with col2:
+        st.caption(f"Confidence: {confidence_badge}")
+
+    if st.button("Clear answer", key="breed_qa_clear"):
+        del st.session_state.breed_qa_result
+        if "breed_qa_question" in st.session_state:
+            del st.session_state.breed_qa_question
+        st.rerun()

@@ -1,0 +1,38 @@
+{
+  "breed": "Poodle",
+  "species": "dog",
+  "aliases": ["poodle", "poodles", "standard poodle", "miniature poodle", "toy poodle"],
+  "size": "varies: toy (under 10 lb), miniature (10-15 lb), standard (40-70 lb)",
+  "exercise": {
+    "daily_minutes": 60,
+    "intensity": "moderate to high",
+    "details": "Standard Poodles need 1-2 hours of vigorous exercise daily — they are athletic retrievers at heart. Miniature Poodles need 45-60 minutes. Toy Poodles need 30-45 minutes. All varieties enjoy swimming, fetch, agility, and obedience training. Mental stimulation through puzzle toys and training sessions is equally important.",
+    "recommended_activities": ["swimming", "fetch", "agility", "obedience", "tracking", "dock diving", "trick training"]
+  },
+  "grooming": {
+    "brushing_frequency": "every 1-2 days",
+    "bathing_frequency": "every 3-6 weeks",
+    "shedding_level": "very low — considered hypoallergenic",
+    "professional_grooming": "every 4-6 weeks",
+    "details": "Poodles have a single-layer curly coat that does not shed but grows continuously and mats quickly if not maintained. Without regular brushing (every 1-2 days) and professional clipping every 4-6 weeks, coats become severely matted. This is the most grooming-intensive aspect of Poodle ownership. Ear hair must be plucked or cleaned regularly to prevent infections."
+  },
+  "diet": {
+    "meals_per_day": 2,
+    "daily_calories_adult": "standard: 1200-1800 kcal; mini: 500-700 kcal; toy: 200-350 kcal",
+    "notes": "Feed a high-quality diet appropriate for size and activity level. Standard Poodles can be prone to bloat — use slow-feed bowls and avoid exercise near mealtimes. Toy Poodles are prone to hypoglycemia as puppies — feed small, frequent meals. All sizes benefit from omega-3 supplementation for coat health."
+  },
+  "health": {
+    "lifespan_years": "standard: 12-15; miniature: 13-16; toy: 14-17",
+    "common_conditions": ["hip dysplasia (standard)", "progressive retinal atrophy", "sebaceous adenitis", "Addison's disease", "bloat/GDV (standard)", "patellar luxation (toy/mini)"],
+    "vet_checkups": "annually; eye and hip testing recommended for standards",
+    "notes": "Poodles are generally a healthy long-lived breed. Sebaceous adenitis (a skin condition) is more common in Standards — an annual skin punch biopsy can detect it early. Addison's disease (adrenal insufficiency) is twice as common in Poodles as other breeds."
+  },
+  "temperament": {
+    "energy_level": "moderate to high",
+    "trainability": "exceptional — ranked #2 most intelligent dog breed",
+    "good_with_children": true,
+    "good_with_other_pets": true,
+    "notes": "Poodles are highly intelligent, sensitive, and eager to please. They excel in obedience, agility, and any dog sport. They can be sensitive to stress and harsh handling — positive reinforcement training is essential. Toy Poodles can be prone to anxiety and excessive barking without proper socialization."
+  },
+  "care_summary": "Poodles are highly intelligent, low-shedding dogs that require committed grooming — professional clipping every 4-6 weeks is non-negotiable. Their intelligence demands mental enrichment daily. They are versatile athletes suitable for families and individuals alike, with the Toy and Miniature varieties adapting well to apartment living."
+}

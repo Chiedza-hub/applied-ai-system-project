@@ -1,0 +1,38 @@
+{
+  "breed": "Siberian Husky",
+  "species": "dog",
+  "aliases": ["siberian husky", "siberian huskies", "husky", "huskies"],
+  "size": "medium (35-60 lb)",
+  "exercise": {
+    "daily_minutes": 120,
+    "intensity": "very high",
+    "details": "Siberian Huskies were bred to run 100+ miles per day in sub-zero temperatures. They need at minimum 2 hours of vigorous exercise daily. Running, hiking, bikejoring, skijoring, and dog sledding are ideal outlets. They must be on a leash or in a securely fenced area at all times — Huskies are escape artists and will run for miles if loose. Do NOT exercise in heat above 60°F (15°C) intensely; they overheat quickly.",
+    "recommended_activities": ["running", "hiking", "bikejoring", "skijoring", "dog sledding", "agility", "weight pulling"]
+  },
+  "grooming": {
+    "brushing_frequency": "2-3 times per week; daily during shedding",
+    "bathing_frequency": "every 6-8 weeks",
+    "shedding_level": "extremely high — 'blowing coat' twice yearly",
+    "professional_grooming": "every 2-3 months",
+    "details": "Huskies have a thick double coat that sheds moderately year-round and massively twice yearly ('blowing coat') for 3-5 weeks. During blowouts, daily brushing with an undercoat rake is essential or the coat becomes severely matted. Never shave a Husky — the double coat insulates against both heat and cold. Huskies are naturally clean dogs and rarely need bathing."
+  },
+  "diet": {
+    "meals_per_day": 2,
+    "daily_calories_adult": "1200-1800 kcal (working dogs may need 2500+)",
+    "notes": "Huskies are uniquely efficient metabolically — they use calories more slowly than most breeds. Avoid overfeeding; they maintain weight on less food than expected. High-quality protein sources support their athletic needs. Huskies can be picky eaters and may skip meals — this is normal."
+  },
+  "health": {
+    "lifespan_years": "12-14",
+    "common_conditions": ["hip dysplasia", "progressive retinal atrophy (PRA)", "cataracts", "hypothyroidism", "zinc-responsive dermatosis"],
+    "vet_checkups": "annually; eye exams by veterinary ophthalmologist recommended",
+    "notes": "Huskies can develop zinc deficiency even on adequate diets due to poor zinc absorption. Signs include crusty nose and paw pads, hair loss, and skin lesions — zinc supplementation resolves it. Eye conditions are common; annual eye exams are recommended."
+  },
+  "temperament": {
+    "energy_level": "very high",
+    "trainability": "moderate — intelligent but stubborn and independent",
+    "good_with_children": true,
+    "good_with_other_pets": true,
+    "notes": "Huskies are friendly, outgoing, and rarely aggressive, but they have a strong prey drive and should not be trusted off-leash. They are notorious escape artists — standard fencing is insufficient; they require 6-foot+ privacy fences and checked underground barriers. They howl rather than bark. They are pack animals and dislike being alone. Not recommended for first-time owners."
+  },
+  "care_summary": "Siberian Huskies are high-endurance working dogs requiring 2+ hours of vigorous daily exercise and extreme containment measures. Their seasonal shedding is significant and requires daily brushing during blowouts. They are friendly and pack-oriented but have a strong prey drive and will roam if given the chance. Experienced, active owners only."
+}

@@ -1,0 +1,38 @@
+{
+  "breed": "Maine Coon",
+  "species": "cat",
+  "aliases": ["maine coon", "maine coons", "maine coon cat"],
+  "size": "large (10-25 lb; one of the largest domestic cat breeds)",
+  "exercise": {
+    "daily_minutes": 30,
+    "intensity": "moderate",
+    "details": "Maine Coons are playful and active but not hyperactive. Two to three 15-minute interactive play sessions daily keep them physically and mentally satisfied. They retain their kitten-like playfulness well into adulthood. They enjoy climbing, fetch, and interactive puzzle toys. Cat trees with high perches are important — they love to survey their territory from above. They adapt well to leash walking.",
+    "recommended_activities": ["wand toys", "fetch", "cat trees", "puzzle feeders", "harness walks", "water play (many love water)"]
+  },
+  "grooming": {
+    "brushing_frequency": "2-3 times per week",
+    "bathing_frequency": "every 4-8 weeks",
+    "shedding_level": "high",
+    "professional_grooming": "every 2-3 months",
+    "details": "Maine Coons have a long, silky, semi-waterproof coat that is surprisingly tangle-resistant compared to other longhaired breeds, but still requires brushing 2-3 times weekly to prevent matting, especially in the chest ruff, armpits, and belly. Use a wide-tooth comb followed by a slicker brush. Their ear tufts and toe tufts need periodic trimming. They shed heavily in spring."
+  },
+  "diet": {
+    "meals_per_day": 2,
+    "daily_calories_adult": "300-500 kcal (size-dependent)",
+    "notes": "Maine Coons are large cats with correspondingly higher caloric needs than average. Feed a high-quality, protein-rich diet; wet food supports hydration and kidney health. They grow slowly and are not fully mature until age 3-5. Provide appropriate portion sizes as they can be prone to obesity if overfed. Fresh water always available."
+  },
+  "health": {
+    "lifespan_years": "12-15",
+    "common_conditions": ["hypertrophic cardiomyopathy (HCM)", "hip dysplasia", "spinal muscular atrophy (SMA)", "polycystic kidney disease (PKD)"],
+    "vet_checkups": "annually; cardiac ultrasound (echocardiogram) recommended from age 2+",
+    "notes": "HCM (thickening of the heart muscle) is the most serious health concern in Maine Coons. A genetic mutation (MyBPC3) is testable via DNA. Annual echocardiograms from age 2 are recommended for early detection. HCM-tested breeding stock is the gold standard — ask breeders for test results."
+  },
+  "temperament": {
+    "energy_level": "moderate",
+    "trainability": "high — often called 'dog-like'",
+    "good_with_children": true,
+    "good_with_other_pets": true,
+    "notes": "Maine Coons are friendly, sociable, and curious. They are one of the most dog-like cat breeds — they often follow their owners around, play fetch, and enjoy supervised outdoor adventures on a harness. They are not lap cats by nature but prefer to be near their people. They get along exceptionally well with children and dogs. Their chirping and trilling vocalizations are distinctive."
+  },
+  "care_summary": "Maine Coons are large, sociable cats with moderate grooming needs and a significant cardiac health risk. Annual echocardiograms from age 2 are the most important proactive health measure. Their gentle, dog-like temperament and adaptability make them one of the best family cat breeds."
+}

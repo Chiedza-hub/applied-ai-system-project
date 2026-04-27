@@ -1,0 +1,38 @@
+{
+  "breed": "Labrador Retriever",
+  "species": "dog",
+  "aliases": ["labrador retriever", "labrador retrievers", "labrador", "labradors", "lab", "labs"],
+  "size": "large",
+  "exercise": {
+    "daily_minutes": 80,
+    "intensity": "moderate to high",
+    "details": "Labs need 1-2 hours of exercise daily. They excel at fetch, swimming, running, and field work. Without adequate exercise they become destructive — chewing furniture, counter-surfing, and jumping. Labs have high endurance and enjoy extended outdoor activities. Like Goldens, puppies under 18 months should avoid excessive high-impact exercise.",
+    "recommended_activities": ["swimming", "fetch", "running", "hiking", "dock diving", "field trials", "agility"]
+  },
+  "grooming": {
+    "brushing_frequency": "1-2 times per week",
+    "bathing_frequency": "every 4-8 weeks",
+    "shedding_level": "high",
+    "professional_grooming": "every 8-12 weeks",
+    "details": "Labs have a short, dense, water-resistant double coat that sheds moderately year-round with heavier shedding twice a year. Weekly brushing with a rubber curry brush or slicker brush is sufficient. Their coat is naturally clean-smelling but they love rolling in things — bathing as needed. Clean ears regularly, especially after swimming."
+  },
+  "diet": {
+    "meals_per_day": 2,
+    "daily_calories_adult": "1200-1800 kcal",
+    "notes": "Labradors are genetically predisposed to obesity — many carry a POMC gene mutation that reduces the sensation of fullness. Strict portion control is essential. Use a measuring cup, limit treats, and avoid table scraps. Choose a large-breed adult formula. Monitor body condition score monthly."
+  },
+  "health": {
+    "lifespan_years": "10-12",
+    "common_conditions": ["obesity (genetic predisposition)", "hip and elbow dysplasia", "exercise-induced collapse (EIC)", "centronuclear myopathy", "progressive retinal atrophy", "ear infections"],
+    "vet_checkups": "annually; OFA hip/elbow certification recommended",
+    "notes": "Labs with the POMC gene mutation (common in the breed) feel hungry even when full — owners must be disciplined about portions. EIC testing is available via DNA; affected Labs must avoid extreme exercise in heat."
+  },
+  "temperament": {
+    "energy_level": "high",
+    "trainability": "excellent — the most popular service dog breed worldwide",
+    "good_with_children": true,
+    "good_with_other_pets": true,
+    "notes": "Labs are outgoing, friendly, and highly trainable. They have a prolonged puppyhood — many Labs behave like puppies until 3-4 years old. They mouth and chew enthusiastically, so durable toys and consistent training are essential. They crave human companionship."
+  },
+  "care_summary": "Labradors are enthusiastic, food-motivated, and highly trainable but prone to obesity and joint disease. Strict portion control, regular exercise, and joint health monitoring are the most critical care priorities. They are outstanding family dogs that mature slowly and need patient, consistent training."
+}

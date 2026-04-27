@@ -1,0 +1,38 @@
+{
+  "breed": "Ragdoll",
+  "species": "cat",
+  "aliases": ["ragdoll", "ragdolls", "ragdoll cat", "ragdoll cats"],
+  "size": "large (10-20 lb)",
+  "exercise": {
+    "daily_minutes": 20,
+    "intensity": "low to moderate",
+    "details": "Ragdolls are calm, moderate-energy cats. Two 10-15 minute play sessions per day are sufficient. They enjoy interactive wand toys and gentle games but are not highly athletic. They tend to go limp when held (hence the name), making them very easy to handle. They are suited to apartment living and indoor-only lifestyles. They must be kept indoors — their docile nature makes them dangerously trusting of strangers and vehicles.",
+    "recommended_activities": ["wand toys", "laser pointer", "soft toy fetch", "puzzle feeders", "window bird watching"]
+  },
+  "grooming": {
+    "brushing_frequency": "2-3 times per week",
+    "bathing_frequency": "every 4-8 weeks",
+    "shedding_level": "moderate to high",
+    "professional_grooming": "every 2-3 months",
+    "details": "Ragdolls have a medium-long silky coat with minimal undercoat, making them less prone to matting than Persians. Brush 2-3 times weekly with a stainless steel comb to prevent tangles, especially in the neck ruff and hindquarters. They shed seasonally. Their stomach fur is particularly prone to matting if neglected. Nails every 2-3 weeks."
+  },
+  "diet": {
+    "meals_per_day": 2,
+    "daily_calories_adult": "300-450 kcal (size-dependent)",
+    "notes": "Ragdolls are large cats that grow slowly — they are not fully mature until age 4. They are prone to obesity given their calm temperament. Feed measured portions of high-quality protein-rich food. Wet food supports urinary health, to which Ragdolls are somewhat predisposed. Avoid free-feeding."
+  },
+  "health": {
+    "lifespan_years": "12-17",
+    "common_conditions": ["hypertrophic cardiomyopathy (HCM)", "bladder stones and urinary tract disease", "polycystic kidney disease (PKD)", "feline infectious peritonitis (FIP) susceptibility"],
+    "vet_checkups": "annually; cardiac screening recommended",
+    "notes": "HCM is the primary genetic health concern — a DNA test for the Ragdoll-specific MYBPC3 mutation is available. Ragdolls are more susceptible to FIP than average — keep stress levels low and avoid introducing sick cats. Their urinary tract health benefits from high wet food intake and adequate hydration."
+  },
+  "temperament": {
+    "energy_level": "low to moderate",
+    "trainability": "moderate — gentle and responsive to positive reinforcement",
+    "good_with_children": true,
+    "good_with_other_pets": true,
+    "notes": "Ragdolls are exceptionally gentle, placid, and affectionate. They are true lap cats that will follow their owners from room to room. Their docile nature makes them poor defenders — they should never be allowed outdoors unsupervised. They greet guests warmly and rarely scratch or bite, making them ideal for families with young children. They can experience separation anxiety."
+  },
+  "care_summary": "Ragdolls are gentle, affectionate cats with low exercise needs and moderate grooming requirements. Their primary health priority is cardiac screening for HCM. Their exceptionally docile temperament means they must be kept strictly indoors. They are one of the most family-friendly cat breeds, thriving on companionship and calm environments."
+}
