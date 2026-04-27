@@ -41,6 +41,7 @@ pip install -r requirements.txt
 - **Task history** — completed tasks are retained and queryable separately from active tasks
 - **Medication tracking** — each pet maintains a list of medications that can be added or removed
 - **Streamlit UI** — a web interface lets the owner add pets, schedule tasks with recurrence and due times, and view today's schedule with conflict alerts
+- **AI-powered overdue recovery** — a Claude-backed agent detects overdue tasks, reasons about the backlog, and proposes a conflict-aware catch-up schedule; changes are only applied after owner confirmation
 
 ## Smarter Scheduling
 
@@ -54,6 +55,33 @@ When a task is added to a `Schedule`, `_check_conflict()` checks whether any exi
 
 ### Sorting and Filtering
 `sort_by_time()` returns tasks ordered by `due_date`, with an optional `reverse` flag for latest-first ordering. `filter_by_status()` returns tasks matching a given completion state (pending or done). `filter_by_pet_name()` returns tasks assigned to a specific pet by name (case-insensitive), useful when viewing a shared schedule across multiple pets.
+
+## Overdue Task Recovery Agent
+
+When overdue tasks are detected, the app surfaces a **🤖 Overdue Task Recovery Agent** section powered by the Anthropic API (`claude-opus-4-7`).
+
+### How it works
+
+1. **Detection** — all incomplete tasks past their due date are collected across every pet.
+2. **Reasoning** — the agent receives the full overdue backlog plus the next 7 days of existing scheduled tasks. It applies priority rules (medical > feeding > exercise > grooming > wellness) and spreads the catch-up plan across multiple days to avoid overloading any single day.
+3. **Proposal** — the agent returns a structured catch-up plan via tool use: a plain-English analysis summary and one rescheduled slot per overdue task, each with a reasoning sentence.
+4. **Confirmation** — the proposed plan is displayed in the UI with the original due date, the new slot, and the agent's reasoning. The owner can confirm (applies all `reschedule()` calls and saves to `data.json`) or dismiss without writing any changes.
+
+### Setup
+
+Set your Anthropic API key before starting the app:
+
+```bash
+export ANTHROPIC_API_KEY="sk-ant-..."
+streamlit run app.py
+```
+
+### Key implementation details
+
+- **`overdue_agent.py`** — standalone module; `run_recovery_agent(overdue_tasks, all_tasks)` returns `{analysis, proposals}`.
+- **Forced tool use** — `tool_choice: {"type": "any"}` guarantees a structured JSON response rather than prose.
+- **Prompt caching** — the system prompt is marked with `cache_control: ephemeral` to reduce latency and cost on repeated calls.
+- **Confirmation flow** — the plan is stored in `st.session_state.recovery_plan` and persists across Streamlit reruns until the owner explicitly confirms or dismisses it.
 
 ## Testing PawPal+
 
