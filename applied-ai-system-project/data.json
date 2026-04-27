@@ -28,7 +28,7 @@
           "category": "feeding",
           "priority": "high",
           "due_date": "2026-04-27T07:30:00",
-          "is_completed": false,
+          "is_completed": true,
           "notes": "",
           "recurrence": null,
           "duration_minutes": 0
@@ -43,6 +43,71 @@
           "notes": "",
           "recurrence": null,
           "duration_minutes": 0
+        },
+        {
+          "task_id": "f58c271c-df67-4713-afd2-ac3f1ee3ee07",
+          "title": "Morning walk",
+          "category": "exercise",
+          "priority": "high",
+          "due_date": "2026-04-27T09:45:00",
+          "is_completed": false,
+          "notes": "",
+          "recurrence": null,
+          "duration_minutes": 15
+        }
+      ]
+    },
+    {
+      "name": "Lucy",
+      "species": "cat",
+      "breed": "Unknown",
+      "age": 0,
+      "pet_id": "ca1fcd3d-55f1-488e-abfc-c3cba9c07aab",
+      "medications": [],
+      "tasks": [
+        {
+          "task_id": "514701a8-34a1-434e-8219-6bc468653bee",
+          "title": "Morning walk",
+          "category": "exercise",
+          "priority": "high",
+          "due_date": "2026-04-27T16:00:00",
+          "is_completed": true,
+          "notes": "",
+          "recurrence": null,
+          "duration_minutes": 0
+        },
+        {
+          "task_id": "89751b84-0d34-4cab-94ca-56ba3c53e408",
+          "title": "Morning walk",
+          "category": "feeding",
+          "priority": "high",
+          "due_date": "2026-04-27T10:00:00",
+          "is_completed": true,
+          "notes": "",
+          "recurrence": null,
+          "duration_minutes": 60
+        },
+        {
+          "task_id": "5df9c70c-5a55-4592-b5b9-7b0b1f650432",
+          "title": "Lunch",
+          "category": "feeding",
+          "priority": "high",
+          "due_date": "2026-04-27T13:00:00",
+          "is_completed": false,
+          "notes": "",
+          "recurrence": null,
+          "duration_minutes": 0
+        },
+        {
+          "task_id": "b5746645-636a-4e39-8d29-d62624242b83",
+          "title": "Dinner",
+          "category": "feeding",
+          "priority": "high",
+          "due_date": "2026-04-27T18:00:00",
+          "is_completed": false,
+          "notes": "",
+          "recurrence": "daily",
+          "duration_minutes": 60
         }
       ]
     }

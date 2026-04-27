@@ -210,20 +210,30 @@ The RAG retrieval pipeline was the most satisfying piece to get right. The three
 
 ## Reflection
 
+### What went well
+
+Working with AI as the head architect was the most satisfying part of this project. Using the AI to implement changes and assist with debugging saved significant time — I could describe a behavior and get working code fast, then focus my energy on reviewing the invariants and edge cases that AI tends to miss. That division of labor felt natural and productive.
+
+The RAG retrieval pipeline was also the most technically satisfying piece. The three-tier matching strategy — exact breed name, then aliases, then species fallback — means the agent surfaces the right guide on the first try for almost any real-world query, all without a vector database or embeddings.
+
 ### What this project taught me about AI and problem-solving
 
-The biggest lesson was that AI makes a great implementer but a poor architect. When I described a feature and asked Claude (the AI assistant) to write it, the output was fast and usually correct but it consistently chose the simplest interpretation. When `get_tasks_for_pet()` was first drafted, it matched pets by name. That works until an owner has two pets named "Max" at which point it fails silently. I only caught this by manually tracing the code, not by accepting the AI's first answer. The fix (switching to UUID lookup) came from my own design review, not from the AI.
+The biggest lesson was that AI makes a great implementer but a poor architect. When I described a feature and asked Claude (the AI assistant) to write it, the output was fast and usually correct but it consistently chose the simplest interpretation. When `get_tasks_for_pet()` was first drafted, it matched pets by name. That works until an owner has two pets named "Max" — at which point it fails silently. I only caught this by manually tracing the code, not by accepting the AI's first answer. The fix (switching to UUID lookup) came from my own design review, not from the AI.
 
-This shaped how I worked for the rest of the project: AI for speed and boilerplate, human judgment for invariants and edge cases.
+This shaped how I worked for the rest of the project: AI for speed and boilerplate, human judgment for invariants and edge cases. There are far more edge cases than you initially expect, and it's tempting to be uncritical when AI produces confident-looking output — but some of what it generates needs a close second look.
 
 **On agents specifically:** Forced tool use (via `tool_choice: any`) was a game-changer for reliability. Free-form responses require fragile parsing; structured tool responses are directly usable by the application. The mental model shift from "ask Claude a question" to "ask Claude to fill out a form" made both the overdue agent and the breed Q&A agent dramatically easier to integrate.
 
 **On trade-offs:** The hardest part was deciding which trade-offs were acceptable. Four stood out:
 
-- **Keeping completed tasks vs. deleting them.** Retaining completed tasks as `is_completed = True` preserves the full care history and prevents the overdue agent from ever accidentally re-scheduling something the owner already did. The cost is that every filter, conflict scan, and overdue query must explicitly skip completed tasks, small now, but a performance concern if the task list grows to thousands of entries over years of use.
+- **Keeping completed tasks vs. deleting them.** Retaining completed tasks as `is_completed = True` preserves the full care history and prevents the overdue agent from ever accidentally re-scheduling something the owner already did. The cost is that every filter, conflict scan, and overdue query must explicitly skip completed tasks — small now, but a performance concern if the task list grows to thousands of entries over years of use.
 - **RAG retrieval vs. fine-tuning.** Storing breed knowledge as JSON files and retrieving them at query time means the knowledge base is easy to update (edit a file, no retraining) and every answer is grounded in data that can be inspected and tested. The cost is retrieval quality: the keyword-and-alias matcher works well for direct breed name questions but fails on semantic queries like "what dog needs the least exercise?" — a fine-tuned or embedding-based system would handle those better.
-- **Forced tool use vs. free-form responses.** Using `tool_choice: any` guarantees a machine-readable JSON response every time, which means zero parsing logic and easy unit-testable outputs. The cost is that if Claude genuinely cannot form a valid plan say, all 7 days are already fully booked — it still calls the tool with incomplete proposals rather than explaining why it got stuck.
+- **Forced tool use vs. free-form responses.** Using `tool_choice: any` guarantees a machine-readable JSON response every time, which means zero parsing logic and easy unit-testable outputs. The cost is that if Claude genuinely cannot form a valid plan — say, all 7 days are already fully booked — it still calls the tool with incomplete proposals rather than explaining why it got stuck.
 - **Confirmation before writes vs. auto-apply.** Requiring the owner to click "Confirm" before any recovery plan is saved means no AI-generated change ever reaches `data.json` silently. The cost is one extra interaction step, but the benefit is that the owner remains the decision-maker — the agent advises, it does not act unilaterally. That distinction matters in a system that touches real care routines.
+
+### What I would do differently
+
+If I had another iteration, I would extend conflict detection to flag tasks within a configurable time buffer (e.g., 30 minutes apart) rather than requiring exact overlap — the current 1-minute gap threshold is too permissive for a real scheduling assistant. I would also add embeddings-based retrieval to the breed Q&A agent so semantic queries like "what dog needs the least exercise?" return the right guide, not just exact breed-name matches.
 
 ### Limitations and biases
 
