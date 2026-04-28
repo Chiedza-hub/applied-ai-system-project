@@ -34,26 +34,26 @@
           "duration_minutes": 0
         },
         {
-          "task_id": "c3888801-444c-4acf-b2bc-a37c3c314993",
-          "title": "Morning walk",
-          "category": "exercise",
-          "priority": "high",
-          "due_date": "2026-04-29T08:00:00",
-          "is_completed": false,
-          "notes": "",
-          "recurrence": null,
-          "duration_minutes": 0
-        },
-        {
           "task_id": "f58c271c-df67-4713-afd2-ac3f1ee3ee07",
           "title": "Morning walk",
           "category": "exercise",
           "priority": "high",
           "due_date": "2026-04-27T09:45:00",
-          "is_completed": false,
+          "is_completed": true,
           "notes": "",
           "recurrence": null,
           "duration_minutes": 15
+        },
+        {
+          "task_id": "19e6e4fe-a9de-4543-99f7-6d9233eda748",
+          "title": "Lunch",
+          "category": "feeding",
+          "priority": "high",
+          "due_date": "2026-04-27T13:00:00",
+          "is_completed": false,
+          "notes": "",
+          "recurrence": "daily",
+          "duration_minutes": 30
         }
       ]
     },
@@ -66,44 +66,44 @@
       "medications": [],
       "tasks": [
         {
-          "task_id": "514701a8-34a1-434e-8219-6bc468653bee",
-          "title": "Morning walk",
-          "category": "exercise",
-          "priority": "high",
-          "due_date": "2026-04-27T16:00:00",
-          "is_completed": true,
+          "task_id": "8186d0d0-3307-4c97-9eb8-1121adda6196",
+          "title": "Teeth Brushing",
+          "category": "grooming",
+          "priority": "low",
+          "due_date": "2026-04-27T20:00:00",
+          "is_completed": false,
           "notes": "",
-          "recurrence": null,
-          "duration_minutes": 0
+          "recurrence": "daily",
+          "duration_minutes": 10
         },
         {
-          "task_id": "89751b84-0d34-4cab-94ca-56ba3c53e408",
-          "title": "Morning walk",
-          "category": "feeding",
-          "priority": "high",
-          "due_date": "2026-04-27T10:00:00",
-          "is_completed": true,
-          "notes": "",
-          "recurrence": null,
-          "duration_minutes": 60
-        },
-        {
-          "task_id": "5df9c70c-5a55-4592-b5b9-7b0b1f650432",
-          "title": "Lunch",
-          "category": "feeding",
-          "priority": "high",
-          "due_date": "2026-04-27T13:00:00",
+          "task_id": "e9a32471-7600-4568-90c1-5788be95fc3f",
+          "title": "Nail Trim",
+          "category": "grooming",
+          "priority": "medium",
+          "due_date": "2026-04-29T11:00:00",
           "is_completed": false,
           "notes": "",
           "recurrence": null,
-          "duration_minutes": 0
+          "duration_minutes": 20
         },
         {
-          "task_id": "b5746645-636a-4e39-8d29-d62624242b83",
-          "title": "Dinner",
+          "task_id": "d7feb240-1499-4e4a-a3d0-1b2df8fc21d2",
+          "title": "Feeding",
           "category": "feeding",
           "priority": "high",
-          "due_date": "2026-04-27T18:00:00",
+          "due_date": "2026-04-27T19:45:00",
+          "is_completed": false,
+          "notes": "",
+          "recurrence": "daily",
+          "duration_minutes": 15
+        },
+        {
+          "task_id": "c114fb42-5c7a-428b-b82e-233adfedbe19",
+          "title": "Morning walk",
+          "category": "exercise",
+          "priority": "medium",
+          "due_date": "2026-04-28T09:30:00",
           "is_completed": false,
           "notes": "",
           "recurrence": "daily",

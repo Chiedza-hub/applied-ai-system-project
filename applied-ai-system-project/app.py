@@ -287,14 +287,26 @@ elif st.session_state.page == "pet":
                     p_icon = PRIORITY_ICON.get(task.priority, "")
                     c_icon = CATEGORY_ICON.get(task.category, "")
                     if task.is_completed:
-                        st.success(f"✅ **{time_str}** — {c_icon} {task.title} [{task.category}]{recur_badge}")
+                        col_task, col_del = st.columns([6, 1])
+                        with col_task:
+                            st.success(f"✅ **{time_str}** — {c_icon} {task.title} [{task.category}]{recur_badge}")
+                        with col_del:
+                            if st.button("🗑️", key=f"delete_{task.task_id}", help="Delete task"):
+                                pet.schedule.remove_task(task.task_id)
+                                owner.save_to_json(DATA_FILE)
+                                st.rerun()
                     else:
-                        col_task, col_btn = st.columns([5, 1])
+                        col_task, col_done, col_del = st.columns([5, 1, 1])
                         with col_task:
                             st.info(f"{p_icon} **{time_str}** — {c_icon} {task.title} [{task.category}]{recur_badge}")
-                        with col_btn:
+                        with col_done:
                             if st.button("✓ Done", key=f"complete_{task.task_id}"):
                                 pet.schedule.complete_task(task.task_id)
+                                owner.save_to_json(DATA_FILE)
+                                st.rerun()
+                        with col_del:
+                            if st.button("🗑️", key=f"delete_{task.task_id}", help="Delete task"):
+                                pet.schedule.remove_task(task.task_id)
                                 owner.save_to_json(DATA_FILE)
                                 st.rerun()
             else:
@@ -303,33 +315,54 @@ elif st.session_state.page == "pet":
             if overdue_tasks:
                 st.markdown(f"**⚠️ Overdue ({len(overdue_tasks)})**")
                 for task in overdue_tasks:
-                    col_task, col_btn = st.columns([5, 1])
+                    col_task, col_done, col_del = st.columns([5, 1, 1])
                     with col_task:
                         st.warning(
                             f"🔴 **{task.due_date.strftime('%b %d, %I:%M %p')}** — "
                             f"{task.title} [{task.category}]"
                         )
-                    with col_btn:
+                    with col_done:
                         if st.button("✓ Done", key=f"complete_{task.task_id}"):
                             pet.schedule.complete_task(task.task_id)
+                            owner.save_to_json(DATA_FILE)
+                            st.rerun()
+                    with col_del:
+                        if st.button("🗑️", key=f"delete_{task.task_id}", help="Delete task"):
+                            pet.schedule.remove_task(task.task_id)
                             owner.save_to_json(DATA_FILE)
                             st.rerun()
 
             if upcoming_tasks:
                 st.markdown(f"**Upcoming ({len(upcoming_tasks)})**")
-                rows = [
-                    {
-                        "Date": t.due_date.strftime("%b %d"),
-                        "Time": t.due_date.strftime("%I:%M %p"),
-                        "Task": t.title,
-                        "Category": t.category,
-                        "Priority": t.priority,
-                        "Recurs": t.recurrence or "—",
-                        "Status": "✅ Done" if t.is_completed else "⏳ Pending",
-                    }
-                    for t in upcoming_tasks
-                ]
-                st.table(rows)
+                for task in upcoming_tasks:
+                    p_icon = PRIORITY_ICON.get(task.priority, "")
+                    c_icon = CATEGORY_ICON.get(task.category, "")
+                    recur_badge = f" _(repeats {task.recurrence})_" if task.recurrence else ""
+                    date_str = task.due_date.strftime("%b %d, %I:%M %p")
+                    status = "✅ Done" if task.is_completed else "⏳"
+                    if task.is_completed:
+                        col_task, col_del = st.columns([6, 1])
+                        with col_task:
+                            st.success(f"{status} **{date_str}** — {c_icon} {task.title} [{task.category}]{recur_badge}")
+                        with col_del:
+                            if st.button("🗑️", key=f"delete_{task.task_id}", help="Delete task"):
+                                pet.schedule.remove_task(task.task_id)
+                                owner.save_to_json(DATA_FILE)
+                                st.rerun()
+                    else:
+                        col_task, col_done, col_del = st.columns([5, 1, 1])
+                        with col_task:
+                            st.info(f"{p_icon} **{date_str}** — {c_icon} {task.title} [{task.category}]{recur_badge}")
+                        with col_done:
+                            if st.button("✓ Done", key=f"complete_{task.task_id}"):
+                                pet.schedule.complete_task(task.task_id)
+                                owner.save_to_json(DATA_FILE)
+                                st.rerun()
+                        with col_del:
+                            if st.button("🗑️", key=f"delete_{task.task_id}", help="Delete task"):
+                                pet.schedule.remove_task(task.task_id)
+                                owner.save_to_json(DATA_FILE)
+                                st.rerun()
 
     st.divider()
 

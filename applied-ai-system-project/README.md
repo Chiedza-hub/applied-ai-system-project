@@ -2,6 +2,11 @@
 
 > A Streamlit application that helps busy pet owners stay consistent with pet care, powered by the Anthropic Claude API for intelligent scheduling recovery and breed-specific guidance.
 
+## Loom Walkthrough
+
+[Watch the walkthrough](https://www.loom.com/share/9b07c2bfc7a04874bd781b8874fa824d)
+
+
 ---
 
 ## Original Project (Modules 1–3)
